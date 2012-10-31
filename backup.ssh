@@ -25,6 +25,7 @@ dumpoptions=" --quick --add-drop-table --add-locks --extended-insert --lock-tabl
 ################
 
 #directories
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 backupdir=/home/$USER/backup
 
 
@@ -49,7 +50,7 @@ done
 tar -czvf /home/$USER/backup/${DOW}-$SITE.tar.gz /home/$USER/public_html ${backupdir}/sql
 
 #Put file on s3
-/home/$USER/s3/s3-put -k $AMAZONID -s "/home/$USER/s3/s3.key" -T /home/$USER/backup/${DOW}-$SITE.tar.gz -v /$BUCKET/$SITE-${DOW}.tar.gz
+$DIR/s3/s3-put -k $AMAZONID -s "/home/$USER/s3/s3.key" -T /home/$USER/backup/${DOW}-$SITE.tar.gz -v /$BUCKET/$SITE-${DOW}.tar.gz
 
 #removing temp files
 rm ${backupdir}/sql/*
